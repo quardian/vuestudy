@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────┐
+    개발환경 설정
+└──────────────────────────────────────────────────────────────────────┘
+
+1. Visual Studio Code
+    https://code.visualstudio.com/
+
+2. Visual Studio Code > Extension
+    - Night Owl
+    - Material Icon Theme    
+    - Vetur
+    - ESLint
+    - Prettier
+    - Auto Close Tag
+    - Atom Keymap
+    - Live Server
+
+3. Chrome Browser
+
+4. Chrome Browser > Extension 
+    - Vue.js devtools 
+        https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en
+
+    

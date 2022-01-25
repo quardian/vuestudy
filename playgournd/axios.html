@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component</title>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="getData">getData</button>
+         <user-list v-bind:users="users"></user-list>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+
+        var userListComponent = {
+            template:`
+                <ul>
+                    <li v-for="(item,idx) in users" :key="item.id">
+                        <div>{{item.id}}</div>
+                        <div>{{item.name}}</div>
+                        <div>{{item.username}}</div>
+                        <div>{{item.email}}</div>
+                        <div>{{item.phone}}</div>
+                        <div>{{item.website}}</div>
+                    </li>
+                </ul>
+            `,
+            props: {
+                users : { type: Array, default:()=>[] }, 
+            },
+        };
+
+        var vm = new Vue({
+                el: '#app',
+
+                data:  {
+                    users : []
+                }, 
+
+                methods:{
+                    
+                    getData: function() {
+                        var url = 'https://jsonplaceholder.typicode.com/users/';
+                        var vm = this;
+                        axios.get(url)
+                        .then( function(response){
+                            
+                            vm.users = response.data;
+                            console.log(vm.users);
+                        })
+                        .catch( function(error){
+                            console.log(error);
+                        });
+                    }
+                },
+
+                components: {
+                    'user-list' : userListComponent
+                }
+            });
+    </script>
+</body>
+</html>

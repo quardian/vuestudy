@@ -1,0 +1,73 @@
+┌──────────────────────────────────────────────────────────────────────┐
+    같은 레벨의 컴포넌트 간 통신 방법
+└──────────────────────────────────────────────────────────────────────┘
+
+    - 아래 그림 처럼, 같은 Root 부모 컴포넌트를 갖은
+      AppHeader와 AppContent 컴포넌트간 통신 방법을 알아본다.
+
+                        Root 
+                ┌─────────┴──────────┐       
+                │                    │
+            AppHeader   <----   AppContent
+
+
+1. Vue 컴포넌트 통신
+    - 자식에서 공통 부모로, event 발생
+    - 부모에서 다른 자식으로, props 전달
+
+    ┌──────────────────────────────────────────────────────────────────────┐
+        <div id="app">
+            <!--컴포넌트 사용-->
+            <app-header v-bind:data="num"></app-header>
+            <app-content v-on:clickpass="clickPass"></app-content>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script>
+            var appHeader = {
+                props:['data'],
+                template: `<div>header</div>`,
+                methods: {
+                    call: function(vm){
+                        console.log('ok', vm);
+                    }
+                }
+            };
+
+            var appContent = {
+                template: `<div>
+                        content
+                        <button v-on:click="clickPass">pass</button>
+                    </div>`,
+                
+                methods: {
+                    clickPass: function(){
+                        this.$emit('clickpass', 10);
+                    }
+                }
+            };
+
+            var vm = new Vue({
+                    el: '#app',
+
+                    data: function(){
+                        return {message:'Hello Vue.js', num : 10}
+                    }, 
+                    
+                    components:{
+                        'app-header' : appHeader,
+                        'app-content': appContent,
+                    },
+
+                    methods:{
+                        clickPass: function(num){
+                            console.log(num)
+                            this.num++;
+                            console.log('clickPass event occours!!');
+                        }
+                    }
+                });
+            console.log(vm);
+        </script>
+    └──────────────────────────────────────────────────────────────────────┘
+    

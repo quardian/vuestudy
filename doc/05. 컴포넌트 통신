@@ -1,0 +1,128 @@
+┌──────────────────────────────────────────────────────────────────────┐
+    Vue 컴포넌트 통신
+└──────────────────────────────────────────────────────────────────────┘
+
+1. Vue 컴포넌트 통신
+
+    - Vue 컴포넌트는 각각 고유한 데이터 유효 범위를 갖는다.
+    
+    - 컴포넌트간 데이터를 주고 받기 위해서는 아래 방법을 따른다. (React와 동일)
+
+        . 상위 --> 하위 : props 전달
+        . 하위 --> 상위 : event 발생
+    
+2. props 
+    
+    - props는 상위 컴포넌트에서 하위 컴포넌트로 데이터를 전달하는 수단.
+    
+    - 사용 방법
+        1) 상위 컴포넌트 data 설정  { data : {data_name:'data'} }
+        2) 하위 컴포넌트 props 정의 { props: ['props_name'] }
+        3) 하위 컴포넌트 태그에 v-bind:props_name="data_name"
+    ┌──────────────────────────────────────────────────────────────────────┐
+        <tag v-bind:props이름="parent-component.data-name">
+    └──────────────────────────────────────────────────────────────────────┘
+    
+    - 사용 예제
+    ┌──────────────────────────────────────────────────────────────────────┐
+        <div id="app">
+            <app-header  v-bind:propsdata="message"></app-header>
+            <app-content v-bind:propsnum="num"></app-content>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script>
+
+            var appHeader = { 
+                template: '<h1>header-{{propsdata}}</h1>', 
+                props: ['propsdata']
+            };
+
+            var appContent = {
+                template: '<div>content - {{propsnum}}</div>',
+                props: ['propsnum']
+            }
+            // 인스턴스 생성
+            var vm = new Vue({
+                el: '#app',
+                components: { 'app-header' : appHeader ,
+                            'app-content': appContent,
+                },
+                data: {
+                    message: 'hi',
+                    num: 10
+                }
+            });
+        </script>
+    └──────────────────────────────────────────────────────────────────────┘    
+
+
+3. event 
+    - 하위 컴포넌트에서 상위 컴포넌트로 이벤트 전달 (emit)
+    - 이벤트 발생 API : this.$emit('eventname')
+
+    ┌──────────────────────────────────────────────────────────────────────┐
+        <tag v-on:이벤트명="parent-component.method">
+    └──────────────────────────────────────────────────────────────────────┘    
+
+ 
+    - 사용 예제
+    ┌──────────────────────────────────────────────────────────────────────┐
+        <div id="app">
+            <!--// [03] pass 이벤트 발생시, 부모 컴포넌트의 logText() 메소드 실행-->
+            <app-header  v-on:pass="logText" ></app-header>
+            <app-content v-on:add="addNum" v-bind:data="num"></app-content>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script>
+
+            var appHeader = { 
+                // [01] 하위 컴포넌트 click 이벤트 발생시, passEvent 메소드 실행
+                template: '<button v-on:click="passEvent">click me</button>',
+                methods: {
+                    passEvent:function(){
+                        // [01] 하위 컴포넌트에서 this.$emit()으로 이벤트 발생
+                        this.$emit('pass');
+                    }, 
+                }
+            };
+
+            var appContent = {
+                props: ['data'],
+                template: '<div><button v-on:click="clickAdd">add num</button><span>{{data}}</span></div>',
+                
+                methods: {
+                    clickAdd : function(){
+                        this.$emit('add');
+                    }
+                }
+            }
+
+
+            // 인스턴스 생성
+            var vm = new Vue({
+                el: '#app',
+
+                components: { 
+                    'app-header' : appHeader ,
+                    'app-content' : appContent
+                },
+
+                data: {
+                    message: 'hi',
+                    num: 10
+                }, 
+
+                methods : {
+                    logText: function(){
+                        // [04] 이벤트 수신 후, 로그 출력
+                        console.log('recied pass!!')
+                    }, 
+                    addNum: function(){
+                        console.log('onAdd received :', this.num);
+                        this.num++;
+                    
+                    }
+                }
+            });
+        </script>        
+    └──────────────────────────────────────────────────────────────────────┘        

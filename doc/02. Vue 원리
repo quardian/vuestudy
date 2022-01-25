@@ -1,0 +1,54 @@
+┌──────────────────────────────────────────────────────────────────────┐
+   Vue 원리
+└──────────────────────────────────────────────────────────────────────┘
+
+1. Object.defineProperty 정적 함수를 통해
+   접근자 디스크립터의 set 함수에서 값이 변경을 감지하여, 
+   데이터가 수정시에 DOM을 갱신해준다 ( 실제는 가상돔 이용하나 직접 DOM을 수정함.)
+
+┌──────────────────────────────────────────────────────────────────────┐
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vue Reactivity</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script>
+            var div = document.querySelector('#app');
+            var vm = {};
+
+            (function(){
+
+                function init(){
+                Object.defineProperty(vm, 'str', {
+                        get: function(){  
+                            console.log('접근');
+                            return this._str;
+                        },
+                        set: function(it){
+                            console.log('할당', it);
+                            this._str = it;
+                            render(it);
+                        }
+                    });
+                }
+
+                function render(it){
+                    div.innerHTML = it;
+                }
+
+                init();
+            })();
+
+            console.log(div);
+        </script>
+
+    </body>
+    </html>
+└──────────────────────────────────────────────────────────────────────┘
+
+

@@ -1,0 +1,113 @@
+┌──────────────────────────────────────────────────────────────────────┐
+    뷰 라우터
+└──────────────────────────────────────────────────────────────────────┘
+
+    - 뷰 라우터는 뷰 라이브러리를 이용하여 싱글 페이지 어플리케이션 구현할 때 사용하는 라이브러리
+      https://router.vuejs.org/kr/installation.html
+
+
+    1. 뷰 라우터 설치
+        - CDN 방식과 NPM 방식 2 가지 가 있다.
+
+        1) CDN 
+        ┌──────────────────────────────────────────────────────────────────────┐
+            https://unpkg.com/vue-router/dist/vue-router.js
+        └──────────────────────────────────────────────────────────────────────┘
+        
+        2) NPM
+        ┌──────────────────────────────────────────────────────────────────────┐
+            npm install vue-router
+        └──────────────────────────────────────────────────────────────────────┘    
+
+    2. Vue 라우터 선언
+        ┌──────────────────────────────────────────────────────────────────────┐
+            var options = {
+                mode:'',                            // URL 해쉬값 제거 속성
+                routes:[ {path:'', component:{}} ], // 라우팅할 URL과 컴포넌트값 지정
+            };
+
+            // 라우터 인스턴스 생성
+            var router = new VueRouter( options );
+
+            // Vue 인스턴스에 라우터 등록
+            var vm = new Vue ( {router : router});
+        └──────────────────────────────────────────────────────────────────────┘    
+
+    3. router-view
+        - 브라우저 주소창에서 URL이 변경되면, 앞에서 정의한 routes 속성에 따라
+          해당 컴포넌트가 표시 영역이 템플릿의 <router-view> 입니다.
+        ┌──────────────────────────────────────────────────────────────────────┐
+            <div id="app">
+                <!--routes에 정의된 선택된 Component로 대체되는 영역 -->
+                <router-view></router-view>
+            </div>
+        └──────────────────────────────────────────────────────────────────────┘    
+
+
+    4. router-link 
+        - 페이지 링크 생성 : 결과물은 <a> 태그 형태로 나온다.
+        ┌──────────────────────────────────────────────────────────────────────┐
+        <div id="app">
+            <div>
+                <router-link to="/login">Login</router-link>
+                <router-link to="main">Main</router-link>
+                <!-- 변환된 결과
+                    <a href="#/login"  
+                        aria-current="page"  
+                        class="router-link-exact-active router-link-active">
+                        Login
+                    </a>                               
+                    <a href="#/main" class="">Main</a> 
+                -->
+            </div>
+             <!--routes에 정의된 선택된 Component로 대체되는 영역 -->
+            <router-view></router-view>
+        </div>
+        └──────────────────────────────────────────────────────────────────────┘    
+
+
+
+    4. Vue 라우터 예제
+    ┌──────────────────────────────────────────────────────────────────────┐
+        <div id="app">
+            <div>
+                <!--OUTPUT 형태 : <a href="">Login</a>-->
+                <router-link to="/login">Login</router-link>
+                <router-link to="main">Main</router-link>
+            </div>
+            <router-view></router-view>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script src=" https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+        <script>
+
+            // 로그인 컴포넌트
+            var LoginComponent = {
+                template: '<div>login</div>'
+            }
+
+            // 메인 컴포넌트
+            var MainComponent = {
+                template: '<div>main</div>'
+            }
+
+            // 페이지 라이팅 정보 객체 배열 ( 페이지 갯수 만큼 객체로 구성 )
+            var routes = [
+                { path: '/login', name: 'login', component: LoginComponent }, 
+                { path: '/main' , name: 'main', component: MainComponent }, 
+            ];
+
+            // Router 인스턴스 생성
+            var router = new VueRouter({
+                routes : routes
+            });
+
+            // Vue 인스턴스 생성        
+            var vm = new Vue({
+                    el: '#app',
+                    router: router,
+                });
+        </script>
+    └──────────────────────────────────────────────────────────────────────┘    

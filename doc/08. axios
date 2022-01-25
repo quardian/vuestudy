@@ -1,0 +1,88 @@
+┌──────────────────────────────────────────────────────────────────────┐
+   AXIOS (액시오스)
+└──────────────────────────────────────────────────────────────────────┘
+
+    - Vue 에서 권고하는 HTTP 통신 라이브러리.
+    - Promise 기반의 HTTP 통신 라이브러리이며, 문서화가 잘된 편이며 API가 다양하다.
+    - https://github.com/axios/axios
+
+    [선수학습] 자바스크립트 비동기 처리 패턴
+        1) callback
+        2) Promise
+        3) Promise + generator 
+        4) async & await
+
+
+    1. AXIOS 설치
+        - CDN 방식과 NPM 방식 2 가지 가 있다.
+
+        1) CDN 
+        ┌──────────────────────────────────────────────────────────────────────┐
+            https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js
+        └──────────────────────────────────────────────────────────────────────┘
+        
+        2) NPM
+        ┌──────────────────────────────────────────────────────────────────────┐
+            npm install axios
+        └──────────────────────────────────────────────────────────────────────┘    
+
+
+    2. AXIOS 샘플
+        ┌──────────────────────────────────────────────────────────────────────┐
+            <div id="app">
+                <button v-on:click="getData">getData</button>
+                <user-list v-bind:users="users"></user-list>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+            <script>
+
+                var userListComponent = {
+                    template:`
+                        <ul>
+                            <li v-for="(item,idx) in users" :key="item.id">
+                                <div>{{item.id}}</div>
+                                <div>{{item.name}}</div>
+                                <div>{{item.username}}</div>
+                                <div>{{item.email}}</div>
+                                <div>{{item.phone}}</div>
+                                <div>{{item.website}}</div>
+                            </li>
+                        </ul>
+                    `,
+                    props: {
+                        users : { type: Array, default:()=>[] }, 
+                    },
+                };
+
+                var vm = new Vue({
+                        el: '#app',
+
+                        data:  {
+                            users : []
+                        }, 
+
+                        methods:{
+                            
+                            getData: function() {
+                                var url = 'https://jsonplaceholder.typicode.com/users/';
+                                var vm = this;
+                                axios.get(url)
+                                .then( function(response){
+                                    
+                                    vm.users = response.data;
+                                    console.log(vm.users);
+                                })
+                                .catch( function(error){
+                                    console.log(error);
+                                });
+                            }
+                        },
+
+                        components: {
+                            'user-list' : userListComponent
+                        }
+                    });
+            </script>    
+        └──────────────────────────────────────────────────────────────────────┘    
