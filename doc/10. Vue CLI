@@ -1,0 +1,71 @@
+┌──────────────────────────────────────────────────────────────────────┐
+   Vue CLI (Command Line Interface)
+└──────────────────────────────────────────────────────────────────────┘
+    - 공식사이트 : https://cli.vuejs.org
+    - 
+
+    1. Vue CLI 설치
+
+        - 터미널 실행 후
+
+        1) NPM 으로 전역 설치
+        ┌──────────────────────────────────────────────────────────────────────┐
+            npm install -g @vue/cli
+            # OR 
+            yarn global add @vue/cli
+        └──────────────────────────────────────────────────────────────────────┘    
+        2) NPM 으로 최신버전 업데이트 시
+
+        ┌──────────────────────────────────────────────────────────────────────┐
+            npm update -g @vue/cli
+            # OR 
+            yarn global upgrade --latest @vue/cli
+        └──────────────────────────────────────────────────────────────────────┘    
+        
+        3) 설치후 버전 확인
+        ┌──────────────────────────────────────────────────────────────────────┐
+            soleo2102@DESKTOP-L5B0QHO MINGW64 /d/projects/my/vuestudy (master)
+            $ node -v
+            v16.13.1
+
+            soleo2102@DESKTOP-L5B0QHO MINGW64 /d/projects/my/vuestudy (master)
+            $ npm -v
+            8.1.2
+
+            soleo2102@DESKTOP-L5B0QHO MINGW64 /d/projects/my/vuestudy (master)
+            $ vue --version
+            @vue/cli 4.5.15
+        └──────────────────────────────────────────────────────────────────────┘                    
+
+
+
+    2. Vue CLI 명령어
+
+        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+            Usage: vue <command> [options]
+
+            Options:
+            -V, --version                              output the version number
+            -h, --help                                 output usage information
+
+            Commands:
+            create [options] <app-name>                create a new project powered by vue-cli-service
+            add [options] <plugin> [pluginOptions]     install a plugin and invoke its generator in an already created project      
+            invoke [options] <plugin> [pluginOptions]  invoke the generator of a plugin in an already created project
+            inspect [options] [paths...]               inspect the webpack config in a project with vue-cli-service
+            serve [options] [entry]                    serve a .js or .vue file in development mode with zero config
+            build [options] [entry]                    build a .js or .vue file in production mode with zero config
+            ui [options]                               start and open the vue-cli ui
+            init [options] <template> <app-name>       generate a project from a remote template (legacy API, requires @vue/cli-init)
+            config [options] [value]                   inspect and modify the config
+            outdated [options]                         (experimental) check for outdated vue cli service / plugins
+            upgrade [options] [plugin-name]            (experimental) upgrade vue cli service / plugins
+            migrate [options] [plugin-name]            (experimental) run migrator for an already-installed cli plugin
+            info                                       print debugging information about your environment
+        └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘                                
+        
+        1) 프로젝트 생성
+            
+            - vue create <app-name>
+
+        
